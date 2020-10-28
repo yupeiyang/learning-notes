@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ypy.dao.IUserDao">
+    <!--开启二级缓存-->
+    <cache/>
+
+    <!--配置查询所有-->
+    <select id="findAll" resultType="ypy.domain.User">
+        select * from user;
+    </select>
+
+    <!-- 按照用户id用户信息 -->
+    <select id="findById" parameterType="java.lang.Integer" resultType="ypy.domain.User" useCache="true">
+        select * from user where id=#{userid};
+    </select>
+
+</mapper>
