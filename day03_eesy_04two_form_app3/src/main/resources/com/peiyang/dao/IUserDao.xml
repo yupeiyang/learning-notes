@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peiyang.dao.IUserDao">
+    <!-- 定义User的resultMap -->
+    <!-- 定义User的resultMap-->
+    <resultMap id="userAccountMap" type="com.peiyang.domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <!-- 配置user对象中accounts集合的映射 : 一对多映射使用collection-->
+        <collection property="accounts" ofType="com.peiyang.domain.Account">
+            <id column="aid" property="id"></id>
+            <result column="uid" property="uid"></result>
+            <result column="money" property="money"></result>
+            <result column="name" property="name"></result>
+        </collection>
+    </resultMap>
+
+    <!-- 配置查询所有，并定义数据表操作的返回值类型 -->
+    <select id="findAll" resultType="com.peiyang.domain.User">
+        select * from user;
+    </select>
+    <!-- 配置查询所有，并定义数据表操作的返回值类型 -->
+    <select id="findAllAccounts" resultMap="userAccountMap">
+        select u.*,a.id as aid ,a.uid,a.money,a.name from user u left outer join account a on u.id =a.uid
+    </select>
+</mapper>
